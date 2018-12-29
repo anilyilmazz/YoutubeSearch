@@ -36,18 +36,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-
+        aramaText.setHint("Ara")
         listView = findViewById(R.id.liste)
-
+        aramaBtn.setOnClickListener {
+            videoSearch()
+        }
     }
 
+    fun videoSearch(){
 
-
-    fun search(view: View){
-
-        var videoIdList: MutableList<String> = mutableListOf<String>()
-        var titleList : MutableCollection<String> = mutableListOf<String>()
-        var imageList : MutableCollection<String> = mutableListOf<String>()
+        val videoIdList: MutableList<String> = mutableListOf<String>()
+        val titleList : MutableCollection<String> = mutableListOf<String>()
+        val imageList : MutableCollection<String> = mutableListOf<String>()
         var searchWord = aramaText.text.toString()
         try{
             searchWord = searchWord.replace(" ", "%20")
@@ -59,28 +59,23 @@ class MainActivity : AppCompatActivity() {
                 val videoId = getId.get("videoId")
                 videoIdList.add(videoId.toString())
 
-                val getTitle = (oneDatum as JSONObject).getJSONObject("snippet")
+                val getTitle = oneDatum.getJSONObject("snippet")
                 val videoTitle = getTitle.get("title")
                 titleList.add(videoTitle.toString())
 
-                val getImage = (oneDatum as JSONObject).getJSONObject("snippet")
+                val getImage = oneDatum.getJSONObject("snippet")
                 val getThumbnail = getImage.getJSONObject("thumbnails")
                 val getMediumImage = getThumbnail.getJSONObject("medium")
                 val videoMediumImageUrl = getMediumImage.get("url")
                 imageList.add(videoMediumImageUrl.toString())
             }
-
             listView?.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,titleList.toTypedArray())
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }catch (e: Exception) {
             Log.d("TAG",e.message);
-
         }
     }
-
-
-
 }
 
 
