@@ -24,7 +24,7 @@ import com.beust.klaxon.JsonObject
 import org.json.JSONArray
 import org.json.JSONObject
 
-val GOOGLE_API_KEY = "AIzaSyCtbwIANm51Acc9KEr9ybfXbtkoNWCQ1cY"
+val GOOGLE_API_KEY = ""
 var SEARCH_COUNT = "15"
 
 class MainActivity : AppCompatActivity() {
